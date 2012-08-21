@@ -2,7 +2,7 @@ RFP-App-Matcher
 =================
 Team Army Ants
 ===================================
-Contributors: 	RaviSundaram Rukmani,  
+Contributors: 	Rukmani Ravisundaram,  
   		Sharan Munyal,  
 		Thirumurthi Pragadheeshwaran
 
