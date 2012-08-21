@@ -76,14 +76,15 @@ public class LuceneIndexer {
 		}
 		writer.close();
 	}
-	@Scheduled(fixedDelay = 30000)
+	@Scheduled(fixedDelay = 300000)
 	public void indexDocs() throws CorruptIndexException, LockObtainFailedException, IOException {
 		String collection = DocStore.CIVIC_COMMONS_COLLECTION;
 		dir = new RAMDirectory();
 		IndexWriterConfig config = new IndexWriterConfig(Version.LUCENE_40, analyzer);
 		IndexWriter writer = new IndexWriter(dir, config);
 		
-		for (DBCursor it = repo.retrieveDocs(collection); it.hasNext();) {
+		DBCursor it = repo.retrieveDocs(collection);
+		while (it.hasNext()) {
 			logger.info("added doc from scheduler");
 			addDoc(writer, it.next());
 		}
@@ -93,7 +94,7 @@ public class LuceneIndexer {
 		Document luceneDoc = new Document();
 		FieldType type = new FieldType();
 		type.setIndexed(true);
-		luceneDoc.add(new Field("title", (String) document.get("name"), type));
+		luceneDoc.add(new Field("name", (String) document.get("name"), Field.Store.YES, Field.Index.ANALYZED));
 		luceneDoc.add(new Field("body", (String) document.get("body"), Field.Store.YES, Field.Index.ANALYZED));
 		writer.addDocument(luceneDoc);
 	}

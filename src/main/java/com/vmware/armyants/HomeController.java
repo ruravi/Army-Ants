@@ -45,15 +45,6 @@ public class HomeController {
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public String home(Locale locale, Model model) {
 		logger.info("Welcome home! the client locale is "+ locale.toString());
-		
-		try {
-			List<AppType> results = searchEngine.search("latitude and longitude");
-			for(AppType result : results) {
-				model.addAttribute("result", result.getName());
-			}
-		} catch (Exception e) {
-			logger.info("Exception in Lucene" + e);
-		} 
 		String environmentName = (System.getenv("VCAP_APPLICATION") != null) ? "Cloud" : "Local";
 		model.addAttribute("environmentName", environmentName);
 		return "home";
@@ -143,6 +134,7 @@ public class HomeController {
 		Twitter twitter = (Twitter) request.getSession().getAttribute("twitter");
 		String userName = twitter.getScreenName();
 
+		searchEngine.indexDocs(DocStore.CIVIC_COMMONS_COLLECTION);
 		// Collect all RFPs this user has uploaded and display them
 		List<RFPCollectionType> rfpsForUser = searchEngine.getAllRFPsForUser(userName);
 		
