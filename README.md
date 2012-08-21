@@ -6,7 +6,7 @@ Contributors: 	RaviSundaram Rukmani,
   		Sharan Munyal,  
 		Thirumurthi Pragadheeshwaran
 
-Scraperwiki Script	: Python located at <TBD>
+Scraperwiki Script	: Python located at \<TBD\>  
 Framework		: Spring MVC
 
 
@@ -28,14 +28,18 @@ Implementation Details
 Scraper Wiki  
 > This python script mines the civic commons web site once a day and populates a database with all the applications in the civic commons repository  
   The values obtained from the scraper wiki script (JSON objects are parsed) are periodically added to our data store
-	
+
+MongoDB Interface  
+
 > Two mongoDB data collections are maintained  
   1. CIVIC_COMMONS_COLLECTION  : contains AppType <ID, AppName, AppDescription, AppURL>  
      Holds the list of all Software applications in Civic commons repository along with its Description and URL  
   2. RFP_COLLECTION            : contains RFPCollectionType <ID, UserName, RFPName, RFPBody>  
      Contains an RFP title, body and the user associated with it, a list of app matches populated as a result of calling search in Lucene Indexer
 	
-	
+
+Apache Lucene
+
 > LuceneIndexer performs intelligent search with the description of the RFP as the query to search our Civic Commons repository. The LuceneIndexer search method runs periodically to perform indexing and adds all the documents to its in-memory RAMIndexer
 		
 User Interface
